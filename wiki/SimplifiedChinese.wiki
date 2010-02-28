@@ -64,7 +64,7 @@ key.php?<script>alert(1);</script>=1&bbb=2
 || *漏洞审计策略* ||
 || PHP版本要求：无<br>系统要求：无<br>审计策略：通读代码 ||
 
-=== 变量覆盖（variable-overwrite） ===
+=== 变量覆盖 ===
 
 很多的漏洞查找者都知道extract()这个函数在指定参数为EXTR_OVERWRITE或者没有指定函数可以导致变量覆盖，但是还有很多其他情况导致变量覆盖的如：
 
@@ -98,7 +98,7 @@ if($_POST && $charset != 'utf-8') {
 || *漏洞审计策略* ||
 || PHP版本要求：无<br>系统要求：无<br>审计策略：通读代码 ||
 
-==== parse_str()变量覆盖漏洞（CVE-2007-3205）、mb_parse_str() ====
+==== parse_str()变量覆盖漏洞 ====
 
 {{{
 //var.php?var=new
@@ -125,7 +125,7 @@ print $var1;
 || PHP版本要求：php4<4.4.7 php5<5.2.2<br>系统要求：无<br>审计策略：查找字符mb_parse_str ||
 
 
-==== import_request_variables()变量覆盖漏洞（CVE-2007-1396） ====
+==== import_request_variables()变量覆盖漏洞 ====
 
 {{{
 //var.php?_SERVER[REMOTE_ADDR]=10.1.1.1
@@ -259,7 +259,9 @@ SELECT * FROM article WHERE articleid='''
 || *漏洞审计策略* ||
 || PHP版本要求：无<br>系统要求：无<br>审计策略：查找对应的编码函数 ||
 
-==== 二次攻击（详细见附录`[`1`]`） ====
+==== 二次攻击 ====
+
+_详细见附录`[`1`]`_
 
 *1)数据库出来的变量没有进行过滤*
 
@@ -509,7 +511,9 @@ $query = $db->query("SELECT DISTINCT t.tid FROM $sqltable WHERE $sqlwhere $order
 || *漏洞审计策略* ||
 || PHP版本要求：php4<4.3 php5<5.14<br>系统要求：无<br>审计策略：查找unset ||
 
-==== session_destroy()删除文件漏洞（测试PHP版本：5.1.2） ====
+==== session_destroy()删除文件漏洞 ====
+
+_测试PHP版本：5.1.2_
     
 这个漏洞是几年前朋友saiy发现的，session_destroy()函数的功能是删除session文件，很多web应用程序的logout的功能都直接调用这个函数删除session，但是这个函数在一些老的版本中缺少过滤导致可以删除任意文件。测试代码如下：
 
