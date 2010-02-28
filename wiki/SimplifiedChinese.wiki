@@ -1,4 +1,5 @@
 #summary Php Application Source Code Audits Advanced Technology - Simplified Chinese
+#labels SC
 
 = 高级PHP应用程序漏洞审核技术 =
 
@@ -268,7 +269,6 @@ _详细见附录`[`1`]`_
 *2)数据库的转义符号：*
 
 || mysql/oracle转义符号同样是\（我们提交'通过魔术引号变化为\'，当我们update进入数据库时，通过转义变为'） ||
-
 || mssql的转义字符为'（所以我们提交'通过魔术引号变化为\'，mssql会把它当为一个字符串直接处理，所以魔术引号对于mssql的注射没有任何意义） ||
     
 从这里我们可以思考得到一个结论：一切进入函数的变量都是有害的，另外利用二次攻击我们可以实现一个webrootkit，把我们的恶意构造直接放到数据库里。我们应当把这样的代码看成一个vul？
