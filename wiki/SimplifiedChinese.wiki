@@ -1,8 +1,8 @@
 Php Application Source Code Audits Advanced Technology - Simplified Chinese
 
 = 高级PHP应用程序漏洞审核技术 =
-
- * [[#前言]]
+<wiki:toc max_depth="5" />
+ * 前言
  * 传统的代码审计技术
  * PHP版本与应用代码审计
  * 其他的因素与应用代码审计
