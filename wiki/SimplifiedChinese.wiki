@@ -1,4 +1,4 @@
-#Php Application Source Code Audits Advanced Technology - Simplified Chinese
+# Php Application Source Code Audits Advanced Technology - Simplified Chinese
 
 
 = 高级PHP应用程序漏洞审核技术 =
@@ -1025,6 +1025,4 @@ heige@heige-desktop:~/dz6/upload$ grep -in 'mt_srand' -r ./ --colour -5
 
 == 附录 ==
 
-[1] http://bbs.phpchina.com/attachment.php?aid=22294
-[2] http://www.php-security.org/
-[3] http://bugs.php.net/bug.php?id=40114
+[1] http://bbs.phpchina.com/attachment.php?aid=22294<br>[2] http://www.php-security.org/<br>[3] http://bugs.php.net/bug.php?id=40114
