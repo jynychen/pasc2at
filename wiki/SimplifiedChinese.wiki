@@ -1,8 +1,8 @@
- #Php Application Source Code Audits Advanced Technology - Simplified Chinese
+Php Application Source Code Audits Advanced Technology - Simplified Chinese
 
 = 高级PHP应用程序漏洞审核技术 =
 
- * 前言
+ * [[前言]]
  * 传统的代码审计技术
  * PHP版本与应用代码审计
  * 其他的因素与应用代码审计
@@ -38,7 +38,7 @@
  * 后话
  * 附录
 
-== 前言 ==
+== [[前言]] ==
 
 PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有跨平台，容易学习，功能强大等特点，据统计全世界有超过34%的网站有php的应用，包括Yahoo、sina、163、sohu等大型门户网站。而且很多具名的web应用系统（包括bbs,blog,wiki,cms等等）都是使用php开发的，Discuz、phpwind、phpbb、vbb、wordpress、boblog等等。随着web安全的热点升级，php应用程序的代码安全问题也逐步兴盛起来，越来越多的安全人员投入到这个领域，越来越多的应用程序代码漏洞被披露。针对这样一个状况，很多应用程序的官方都成立了安全部门，或者雇佣安全人员进行代码审计，因此出现了很多自动化商业化的代码审计工具。也就是这样的形势导致了一个局面：大公司的产品安全系数大大的提高，那些很明显的漏洞基本灭绝了，那些大家都知道的审计技术都无用武之地了。我们面对很多工具以及大牛扫描过n遍的代码，有很多的安全人员有点悲观，而有的官方安全人员也非常的放心自己的代码，但是不要忘记了“没有绝对的安全”，我们应该去寻找新的途径挖掘新的漏洞。本文就给介绍了一些非传统的技术经验和大家分享。
 
@@ -46,7 +46,7 @@ PHP是一种被广泛使用的脚本语言，尤其适合于web开发。具有�
 
 == 传统的代码审计技术 ==
 
-WEB应用程序漏洞查找基本上是围绕两个元素展开：变量与函数。也就是说一漏洞的利用必须把你提交的恶意代码通过变量经过n次变量转换传递，最终传递给目标函数执行，还记得MS那句经典的名言吗？“一切输入都是有害的”。这句话只强调了变量输入，很多程序员把“输入”理解为只是gpc[$_GET,$_POST,$_COOKIE]，但是变量在传递过程产生了n多的变化。导致很多过滤只是个“纸老虎”！我们换句话来描叙下代码安全：“一切进入函数的变量是有害的”。
+WEB应用程序漏洞查找基本上是围绕两个元素展开：变量与函数。也就是说一漏洞的利用必须把你提交的恶意代码通过变量经过n次变量转换传递，最终传递给目标函数执行，还记得MS那句经典的名言吗？“一切输入都是有害的”。这句话只强调了变量输入，很多程序员把“输入”理解为只是gpc`[`$_GET,$_POST,$_COOKIE`]`，但是变量在传递过程产生了n多的变化。导致很多过滤只是个“纸老虎”！我们换句话来描叙下代码安全：“一切进入函数的变量是有害的”。
 
 PHP代码审计技术用的最多也是目前的主力方法：静态分析，主要也是通过查找容易导致安全漏洞的危险函数，常用的如grep，findstr等搜索工具，很多自动化工具也是使用正则来搜索这些函数。下面列举一些常用的函数，也就是下文说的字典（暂略）。但是目前基本已有的字典很难找到漏洞，所以我们需要扩展我们的字典，这些字典也是本文主要探讨的。
 
@@ -834,11 +834,11 @@ for($i=0;$i<50000;$i++)
 经过测试字符“.”、“ /”或者2个字符的组合，在一定的长度时将被截断，win系统和`*`nix的系统长度不一样，当win下strlen(realpath("./"))+strlen($_GET['action'])的长度大于256时被截断，对于`*`nix的长度是4 `*` 1024 = 4096。对于php.ini里设置远程文件关闭的时候就可以利用上面的技巧包含本地文件了。（此漏洞由cloie#ph4nt0m.org最先发现]）
 
 ===== 数据截断 =====
-    
+
 对于很多web应用文件在很多功能是不容许重复数据的，比如用户注册功能等。一般的应用程序对于提交注册的username和数据库里已有的username对比是不是已经有重复数据，然而我们可以通过“数据截断”等来饶过这些判断，数据库在处理时候产生截断导致插入重复数据。
-    
+
 *1) Mysql SQL Column Truncation Vulnerabilities*
-   
+
 这个漏洞又是大牛Stefan Esser发现的（Stefan Esser是我的偶像:)），这个是由于mysql的sql_mode设置为default的时候，即没有开启STRICT_ALL_TABLES选项时，MySQL对于插入超长的值只会提示warning，而不是error（如果是error就插入不成功），这样可能会导致一些截断问题。测试如下：
     
 {{{
@@ -858,7 +858,7 @@ mysql> select * from truncated_test;
 }}}
 
 *2) Mysql charset Truncation vulnerability*
-    
+
 这个漏洞是80sec发现的，当mysql进行数据存储处理utf8等数据时对某些字符导致数据截断。测试如下：
     
 {{{
@@ -946,7 +946,7 @@ for($i=0;$i<255;$i++) {
 
 == DEMO ==
 
-|| *DEMO -- Discuz! Reset User Password 0day Vulnerability 分析<br>（Exp:<a>http://www.80vul.com/dzvul/sodb/14/sodb-2008-14.txt</a>）* ||
+|| *DEMO -- Discuz! Reset User Password 0day Vulnerability 分析<br>（Exp:[http://www.80vul.com/dzvul/sodb/14/sodb-2008-14.txt]）* ||
 || PHP版本要求:php4 php5<5.2.6<br>系统要求: 无<br>审计策略:查找mt_srand/mt_rand ||
 
 第一步 安装Discuz! 6.1后利用grep查找mt_srand得到：
@@ -1004,4 +1004,6 @@ heige@heige-desktop:~/dz6/upload$ grep -in 'mt_srand' -r ./ --colour -5
 
 == 附录 ==
 
-`[`1`]` http://bbs.phpchina.com/attachment.php?aid=22294<br>`[`2`]` http://www.php-security.org/<br>`[`3`]` http://bugs.php.net/bug.php?id=40114
+`[`1`]` [http://bbs.phpchina.com/attachment.php?aid=22294]
+`[`2`]` [http://www.php-security.org/]
+`[`3`]` [http://bugs.php.net/bug.php?id=40114]
